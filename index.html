@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Ganancia BTC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f0f2f5;
+      color: #333;
+    }
+    h2 {
+      color: #222;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      width: 100%;
+      max-width: 300px;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #155724;
+    }
+  </style>
+</head>
+<body>
+  <h2>Calculadora de Ganancia BTC</h2>
+
+  <label for="tipoOperacion">Tipo de operación:</label><br>
+  <select id="tipoOperacion">
+    <option value="long">Compra (Long)</option>
+    <option value="short">Venta (Short)</option>
+  </select><br>
+
+  <label for="lote">Tamaño del lote (ej. 0.01):</label><br>
+  <input type="number" id="lote" min="0.01" step="0.01" value="0.01"><br>
+
+  <label for="entrada">Precio de entrada:</label><br>
+  <input type="number" id="entrada" value="100000"><br>
+
+  <label for="salida">Precio de salida:</label><br>
+  <input type="number" id="salida" value="101000"><br>
+
+  <button onclick="calcularGanancia()">Calcular Resultado</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcularGanancia() {
+      const tipo = document.getElementById("tipoOperacion").value;
+      const lote = parseFloat(document.getElementById("lote").value);
+      const entrada = parseFloat(document.getElementById("entrada").value);
+      const salida = parseFloat(document.getElementById("salida").value);
+
+      let resultado = 0;
+
+      if (tipo === "long") {
+        resultado = (salida - entrada) * lote;
+      } else {
+        resultado = (entrada - salida) * lote;
+      }
+
+      let mensaje = "";
+
+      if (resultado > 0) {
+        mensaje = `Tu ganancia sería de $${resultado.toFixed(2)} USD.`;
+      } else if (resultado < 0) {
+        mensaje = `Tu pérdida sería de $${Math.abs(resultado).toFixed(2)} USD.`;
+      } else {
+        mensaje = "No hay ganancia ni pérdida en esta operación.";
+      }
+
+      document.getElementById("resultado").innerText = mensaje;
+    }
+  </script>
+</body>
+</html>
